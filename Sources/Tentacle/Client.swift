@@ -351,10 +351,13 @@ public final class Client {
         return fetchOne(.content(owner: repository.owner, repository: repository.name, path: path, ref: ref))
     }
 
-    /// Create a file in a repository
-    public func create(file: File, atPath path: String, in repository: Repository, inBranch branch: String? = nil) -> SignalProducer<(Response, FileResponse), Error> {
-        return send(file, to: .content(owner: repository.owner, repository: repository.name, path: path, ref: branch), using: .put)
-    }
+// NOTE: Temporarily removed, due to Swift 3.1 compiler crash when attempting to specialize generics in this function.
+//
+// See: <https://github.com/mdiep/Tentacle/issues/68>.
+//    /// Create a file in a repository
+//    public func create(file: File, atPath path: String, in repository: Repository, inBranch branch: String? = nil) -> SignalProducer<(Response, FileResponse), Error> {
+//        return send(file, to: .content(owner: repository.owner, repository: repository.name, path: path, ref: branch), using: .put)
+//    }
 
     /// Get branches for a repository
     public func branches(in repository: Repository, page: UInt = 1, perPage: UInt = 30) -> SignalProducer<(Response, [Branch]), Error> {
