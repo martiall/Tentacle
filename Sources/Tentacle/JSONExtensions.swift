@@ -10,19 +10,19 @@ import Foundation
 import Result
 
 internal func decode<T: Decodable>(_ payload: Data) -> Result<T, DecodingError> {
-    return Result { () -> T in
+    return Result(catching: { () -> T in
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .formatted(DateFormatter.iso8601)
         return try decoder.decode(T.self, from: payload)
-    }
+    })
 }
 
 internal func decodeList<T: Decodable>(_ payload: Data) -> Result<[T], DecodingError> {
-    return Result { () -> [T] in
+    return Result(catching: { () -> [T] in
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .formatted(DateFormatter.iso8601)
         return try decoder.decode([T].self, from: payload)
-    }
+    })
 }
 
 extension DecodingError.Context: Equatable {
